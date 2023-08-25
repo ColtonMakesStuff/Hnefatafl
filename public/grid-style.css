@@ -1,0 +1,93 @@
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(13, minmax(0, 1fr));
+  grid-template-rows: repeat(13, minmax(0, 1fr));
+  border: 1px solid #000;
+  width: 600px; /* Adjust the width as needed */
+  height: 600px; /* Adjust the height as needed */
+}
+
+.game-square {
+  background-color: #fff;
+  border-style: solid;
+  position: relative;
+  display: flex; /* Add this line */
+  align-items: center; /* Add this line */
+  justify-content: center; /* Add this line */
+}
+
+.corner {
+
+  position: relative;
+}
+
+.corner::before,
+.corner::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background-color: #000;
+}
+
+.corner::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.corner::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.attackerSquare {
+
+  position: relative;
+}
+
+.attackerSquare::before,
+.attackerSquare::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background-color: #ff0000;
+}
+
+.attackerSquare::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.attackerSquare::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.jarlSquare {
+
+  position: relative;
+}
+
+.jarlSquare::before,
+.jarlSquare::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background-color: #001bcb;
+}
+
+.jarlSquare::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.jarlSquare::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+
+
