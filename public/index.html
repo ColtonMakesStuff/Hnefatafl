@@ -7,13 +7,54 @@
   <link rel="stylesheet" href="grid-style.css">
   <link rel="stylesheet" href="peice-style.css">
 
-
+<div class="guy" id="1"></div>
 </head>
 
         <body>
-          <div class="game-board"></div>
-        
+          <!-- <div class="game-board"></div> -->
+          <div class="tableHolder">
+          <table>
+            <tr>
+                <td class='winSquare'></td><td></td><td></td><td class="beserkerSquare"><div class="beserker" id="0">0</div></td><td class="beserkerSquare"><div class="beserker" id="1">1</div></td><td class="beserkerSquare"><div class="beserker" id="2">2</div></td><td class="beserkerSquare" ><div class="beserker" id="3">3</div></td><td class="beserkerSquare"><div class="beserker" id="4">4</div></td><td></td><td></td><td class='winSquare'></td>
+            </tr>
+            <tr>
+                <td></td><td></td><td></td><td></td><td></td><td class="beserkerSquare"><div class="beserker" id="5">5</div></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td class="beserkerSquare"><div class="beserker" id="6">6</div></td><td></td><td></td><td></td><td></td><td class="guardSquare"><div class="guard" id="24">24</div></td><td></td><td></td><td></td><td></td><td class="beserkerSquare"><div class="beserker" id="7">7</div></td>
+            </tr>
+            <tr>
+                <td class="beserkerSquare"><div class="beserker" id="8">8</div></td><td></td><td></td><td></td><td class="guardSquare"><div class="guard" id="25">25</div></td><td class="guardSquare"><div class="guard" id="26">26</div></td><td class="guardSquare"><div class="guard" id="27">27</div></td><td></td><td></td><td></td><td class="beserkerSquare"><div class="beserker" id="9">9</div></td>
+            </tr>
+            <tr>
+                <td class="beserkerSquare"><div class="beserker" id="10">10</div></td><td class="beserkerSquare"><div class="beserker" id="11">11</div></td><td></td><td class="guardSquare"><div class="guard" id="28">28</div></td><td class="guardSquare"><div class="guard" id="29">29</div></td><td class="jarlsSquare"><div class="jarl" id="36">36</div></td><td class="guardSquare"><div class="guard" id="30">30</div></td><td class="guardSquare"><div class="guard" id="31">31</div></td><td></td><td class="beserkerSquare"><div class="beserker" id="12">12</div></td><td class="beserkerSquare"><div class="beserker" id="13">13</div></td>
+            </tr>
+            <tr>
+                <td class="beserkerSquare"><div class="beserker" id="14">14</div></td><td></td><td></td><td></td><td class="guardSquare"><div class="guard" id="32">32</div></td><td class="guardSquare"><div class="guard" id="33">33</div></td><td class="guardSquare"><div class="guard" id="34">34</div></td><td></td><td></td><td></td><td class="beserkerSquare"><div class="beserker" id="15">15</div></td>
+            </tr>    
+            <tr>
+                <td class="beserkerSquare"><div class="beserker" id="16">16</div></td><td></td><td></td><td></td><td></td><td class="guardSquare"><div class="guard" id="35">35</div></td><td></td><td></td><td></td><td></td><td class="beserkerSquare"><div class="beserker" id="17">17</div></td>
+            </tr>
+            <tr>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td></td><td></td><td></td><td></td><td></td><td class="beserkerSquare"><div class="beserker" id="18">18</div></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td class='winSquare'></td><td></td><td></td><td class="beserkerSquare"><div class="beserker" id="19">19</div></td><td class="beserkerSquare"><div class="beserker" id="20">20</div></td><td class="beserkerSquare"><div class="beserker" id="21">21</div></td><td class="beserkerSquare"><div class="beserker" id="22">22</div></td><td class="beserkerSquare"><div class="beserker" id="23">23</div></td><td></td><td></td><td class='winSquare'></td>
+            </tr>
+          </table>
           
+        </div>
+            <div class="howTheTurnTables">
+          <div class="attackersTurn">Attackers Turn</div>
+          <p id="divider"> | </p>
+          <div class="guardsTurn">Guards Turn</div>
+            </div>
           <script src="index.js"> </script>
         </body>
         </html>
