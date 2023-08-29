@@ -81,32 +81,97 @@
 // }
 // generateGameBoard()
 
-const board = [
-  null, null, null,    0,    1,    2,    3,    4, null, null, null,
-
-  null, null, null, null, null,    5, null, null, null, null, null,
-
-  null, null, null, null, null, null, null, null, null, null, null,
-
-   6,   null, null, null, null,   24, null, null, null, null,   7,
-
-   8,   null, null, null,   25,   26,   27, null, null, null,   9,
-
-  10,     11, null,   28,   29,   36,   30,   31, null,   12,   13,
-
-  14,   null, null, null,   32,   33,   34, null, null, null,   15,
-
-  16,   null, null, null, null,   35, null, null, null, null,   17,
-
-  null, null, null, null, null, null, null, null, null, null, null,
-
-  null, null, null, null, null,   18, null, null, null, null, null,
-
-  null, null, null,   19,   20,   21,   22,   23, null, null, null,
-]
+const board = {
+  a: [null, null, null,    0,    1,    2,    3,    4, null, null, null],
+  
+  b: [null, null, null, null, null,    5, null, null, null, null, null],
+  
+  c: [null, null, null, null, null, null, null, null, null, null, null],
+  
+  d: [   6, null, null, null, null,   24, null, null, null, null,    7],
+  
+  e: [   8, null, null, null,   25,   26,   27, null, null, null,    9],
+  
+  f: [  10,   11, null,   28,   29,   36,   30,   31, null,   12,   13],
+  
+  g: [  14, null, null, null,   32,   33,   34, null, null, null,   15],
+  
+  h: [  16, null, null, null, null,   35, null, null, null, null,   17],
+  
+  i: [null, null, null, null, null, null, null, null, null, null, null],
+  
+  j: [null, null, null, null, null,   18, null, null, null, null, null],
+  
+  k: [null, null, null,   19,   20,   21,   22,   23, null, null, null]
+};
 
 console.log(board)
 
+function logRowsWithSameArrayPosition(board, rowIndex, arrayIndex) {
+  const boardArray = Object.values(board);
+  const currentRow = boardArray[rowIndex];
+  
+  boardArray.forEach((row, index) => {
+    const value = row[arrayIndex];
+    const currentColumn = boardArray.map(row => row[arrayIndex]);
+    console.log(`Row ${index}: ${value} | Current Row: ${currentRow} | Current Column: ${currentColumn}`);
+  });
+  // logAvailableSpaces(board, rowIndex, arrayIndex)
+}
+
+// function logAvailableSpaces(board, rowIndex, arrayIndex) {
+//   const boardArray = Object.values(board);
+//   const currentRow = boardArray[rowIndex];
+//   const currentColumn = boardArray.map(row => row[arrayIndex]);
+
+//   let availableSpacesBeforeRow = [];
+//   let availableSpacesAfterRow = [];
+//   let availableSpacesBeforeColumn = [];
+//   let availableSpacesAfterColumn = [];
+
+//   for (let i = 0; i < boardArray.length; i++) {
+//     const row = boardArray[i];
+
+//     // Row Check
+//     const valueRow = row[arrayIndex];
+
+//     if (i < rowIndex && valueRow !== null) {
+//       availableSpacesBeforeRow = []; // Reset available spaces if a non-null value is found before the current row
+//     } else if (i > rowIndex && valueRow !== null) {
+//       break; // Stop checking if a non-null value is found after the current row
+//     } else if (i < rowIndex && valueRow === null) {
+//       availableSpacesBeforeRow.push(i); // Add index to available spaces before the current row
+//     } else if (i > rowIndex && valueRow === null) {
+//       availableSpacesAfterRow.push(i); // Add index to available spaces after the current row
+//     }
+
+//     // Column Check
+//     const valueColumn = boardArray[i][arrayIndex];
+
+//     if (i < arrayIndex && valueColumn !== null) {
+//       availableSpacesBeforeColumn = []; // Reset available spaces if a non-null value is found before the current column
+//     } else if (i > arrayIndex && valueColumn !== null) {
+//       break; // Stop checking if a non-null value is found after the current column
+//     } else if (i < arrayIndex && valueColumn === null) {
+//       availableSpacesBeforeColumn.push(i); // Add index to available spaces before the current column
+//     } else if (i > arrayIndex && valueColumn === null) {
+//       availableSpacesAfterColumn.push(i); // Add index to available spaces after the current column
+//     }
+//   }
+
+//   console.log(`Row ${rowIndex}: ${currentRow}`);
+//   console.log(`Column ${arrayIndex}: ${currentColumn}`);
+//   console.log(`Available Spaces Before (Row): ${availableSpacesBeforeRow}`);
+//   console.log(`Available Spaces After (Row): ${availableSpacesAfterRow}`);
+//   console.log(`Available Spaces Before (Column): ${availableSpacesBeforeColumn}`);
+//   console.log(`Available Spaces After (Column): ${availableSpacesAfterColumn}`);
+// }
+
+
+
+//if the found item is less than, than anything less thatn is discarded and same thing with greater than
+
+logRowsWithSameArrayPosition(board, 7, 5)
 
 //load to dom
 const boardWidth = 11; // Width of the game board
