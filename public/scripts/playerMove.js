@@ -1,3 +1,4 @@
+
 import {gameBoard} from './board.js';
 const movePiece = (fromRow, fromCol, toRow, toCol) => {
     // Check if the move is valid
@@ -10,7 +11,13 @@ const movePiece = (fromRow, fromCol, toRow, toCol) => {
   
   // Example usage of the movePiece function
  
+const getCellElement = (row, col) => {
+    const cellId = `${row}${col}`;
+    const cellElement = document.querySelector(`#${cellId}`);
+    
+    return cellElement;
+  };
 
-  export default movePiece;
+  export {movePiece, getCellElement};
 
 

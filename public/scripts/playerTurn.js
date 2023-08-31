@@ -5,12 +5,10 @@ import {board} from './board.js';
 let turn = true;
 let attackerWin = false;
 let jarlsGuardWin = false;
+let jarlPiece = false;
 let playerPieces;
 
- let selectedPiece = { 
-  pieceId: -1, 
-  index0fBoardPiece: -1, 
- }
+ 
 
 
  function logRowsWithSameArrayPosition(board, rowIndex, arrayIndex) {
