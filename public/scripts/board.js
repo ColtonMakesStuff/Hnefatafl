@@ -59,7 +59,7 @@ const generateBoard = () => {
 
     html += '</tr>';
   }
-console.log(html)
+// console.log(html)
   return html;
 };
 

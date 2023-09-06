@@ -6,8 +6,110 @@ let currentPlayer = 'Attacker';
 function togglePlayerTurn() {
   currentPlayer = currentPlayer === 'Attacker' ? 'Defender' : 'Attacker';
 }
+//if player is attacker than give event listener to the divs with the beserker class
 
-console.log('Current player:', currentPlayer); // Player One
+const whosTurnIsItAnyway = (currentPlayer) => {
+  // console.log("whosTurnIsItAnyway function ran");
+  console.log(currentPlayer)
+  if (currentPlayer === 'Attacker') {
+    let pieceType = 'beserker';
+    handleInitialClick(pieceType) 
+  } else if (currentPlayer === 'Defender') {
+    let pieceType = 'guard, .jarl';
+    handleInitialClick(pieceType) 
+  } 
+};
+
+const handleInitialClick = (pieceType) => {
+  
+  const divs = document.querySelectorAll(`.${pieceType}`);
+  console.log(`whosTurnIsItAnyway function ran for ${pieceType}`);
+  console.log("handleing add listeners")
+  divs.forEach(div => {
+    div.addEventListener('click', function(event) {
+      console.log("handling initial click")
+      // Remove the 'highlight' class from all divs
+      divs.forEach(div => {
+        div.classList.remove('highlight');
+      });
+
+      // Add the 'highlight' class to the clicked div
+      div.classList.add('highlight');
+
+      console.log(`${pieceType} started turn`);
+       console.log("div id is hopefully " + div.id);
+      // Add your logic here
+      const pieceID = parseFloat(div.id);
+    // Get the ID of the parent element
+    const parentId = div.parentNode.id;
+console.log("the selected piece id is " +parentId)
+   const parsedID = parseID(parentId);
+const letter = parsedID.letter;
+const numberAsInt = parsedID.numberAsInt;
+console.log('Parent ID:', letter, numberAsInt);
+logRowsWithSameArrayPosition(gameBoard, `${letter}`, numberAsInt, pieceID)
+    });
+  });
+} 
+
+function logRowsWithSameArrayPosition(board, row, column, pieceID) {
+  console.log("adding classes to available spaces")
+  let currentRow = board[row];
+  // let currentColumn = column; 
+
+
+  // Iterate over the keys and concatenate column 3 values to the string
+  const columnArray = []; // Declare an empty array
+
+for (const key in gameBoard) {
+  const value = gameBoard[key][column];
+  columnArray.push(value); // Push the value to the array
+}
+const tds = document.querySelectorAll('td');
+tds.forEach(td => {
+  td.classList.remove('highlight');
+});
+
+
+  console.log( "this is the column array "+ columnArray);
+  console.log("this is the row array "+ currentRow)
+  const convertedColumnArray = convertArray(columnArray, pieceID);
+  const convertedRowArray = convertArray(currentRow, pieceID);
+
+  console.log("valid column " + convertedColumnArray)
+  console.log("valid row " + convertedRowArray)
+
+
+  currentRow.forEach((item, index) => {
+    if (item === null) {
+      const currID = row + (index);
+      // console.log(currID);
+      const avail = document.querySelector(`#${currID}`);
+      // console.log(avail);
+
+      if (isVisible) {
+        avail.classList.add('highlight');
+      }
+    }
+  });
+
+  columnArray.forEach((item, index) => {
+    if (item === null) {
+      const letter = String.fromCharCode(index + 97); // 97 is the ASCII value of 'a'
+      const currID = letter + column;
+      // console.log("currID is " + currID)
+      const avail = document.querySelector(`#${currID}`);
+  
+      if (isVisible) {
+        avail.classList.add('highlight');
+      }
+    }
+  });
+
+
+  console.log(`This is the horizontal and vertical for the chosen piece:\n- Current Row:\n   ${currentRow}\n- Current Column:\n   ${columnArray}`);
+}
+// console.log('Current player:', currentPlayer); // Player One
 
  // player properties
 
@@ -17,6 +119,7 @@ let jarlPiece = false;
 let playerPieces;
 
 const parseID = (input) => {
+
   // Split the string into two parts: the letter and the number
   let letter = input.match(/[a-zA-Z]+/)[0];
   const number = input.match(/\d+/)[0];
@@ -29,50 +132,8 @@ const parseID = (input) => {
 };
 
 
-const handleInitialClick = (pieceType) => {
-  
-  const divs = document.querySelectorAll(`.${pieceType}`);
-  console.log(`whosTurnIsItAnyway function ran for ${pieceType}`);
-  divs.forEach(div => {
-    div.addEventListener('click', function(event) {
-      // Remove the 'highlight' class from all divs
-      divs.forEach(div => {
-        div.classList.remove('highlight');
-      });
-
-      // Add the 'highlight' class to the clicked div
-      div.classList.add('highlight');
-
-      console.log(`${pieceType} started turn`);
-      console.log('Div clicked', event);
-      // Add your logic here
-    // Get the ID of the parent element
-    const parentId = div.parentNode.id;
-
-   const parsedID = parseID(parentId);
-const letter = parsedID.letter;
-const numberAsInt = parsedID.numberAsInt;
-console.log('Parent ID:', letter, numberAsInt);
 
 
-      logRowsWithSameArrayPosition(gameBoard, `${letter}`, numberAsInt)
-    });
-  });
-} 
-
-//if player is attacker than give event listener to the divs with the beserker class
-
-const whosTurnIsItAnyway = (currentPlayer) => {
-  console.log("whosTurnIsItAnyway function ran");
-  console.log(currentPlayer)
-  if (currentPlayer === 'Attacker') {
-    let pieceType = 'beserker';
-    handleInitialClick(pieceType) 
-  } else if (currentPlayer === 'Defender') {
-    let pieceType = 'guard, .jarl';
-    handleInitialClick(pieceType) 
-  } 
-};
 
 function getAvailablePieces() {
   const availablePieces = [];
@@ -114,101 +175,72 @@ getAvailablePieces();
 // isSquareOccupied("a3"); // Square is not occupied by a game piece.
 // isSquareOccupied("a4"); // Square is occupied by a game piece less than 24.
 // isSquareOccupied("f6"); // Square is occupied by a game piece between 24 and 36.
-const isNullSpaceVisible = (currID) => {
-  // Function logic goes here
-};
 
-function convertArray(array) {
+
+function convertArray(array, chosenID) {
+  console.log(array +" is being tested")
+  console.log(chosenID +" is my piece")
+  
   const indicesOfNull = [];
   for (let i = 0; i < array.length; i++) {
     if (array[i] === null) {
       indicesOfNull.push(i);
     }
   }
+ console.log("i of null " + indicesOfNull)
+  let indexOfMyNumb = array.indexOf(chosenID);
+  console.log("my piece is at "+ indexOfMyNumb)
 
-  const index = array.indexOf("myNumb");
-  const beforeNullArray = indicesOfNull.filter((index) => index < array.indexOf("myNumb"));
-  const afterNullArray = indicesOfNull.filter((index) => index > array.indexOf("myNumb"));
+  const beforeNullArray = indicesOfNull.filter((index) => index < array.indexOf(chosenID));
+  const afterNullArray = indicesOfNull.filter((index) => index > array.indexOf(chosenID));
 
   const reversedBeforeNullArray = beforeNullArray.reverse();
 
   console.log(reversedBeforeNullArray);
   console.log(afterNullArray);
 
-  const validNumbers = [];
+  let validNumbers = [];
 
-  afterNullArray.forEach((index, pos) => {
-    if ((index + 1) === afterNullArray[pos+1]) {
-      validNumbers.push(array[index + 1]);
+let indexOfMyNumbForAfter = indexOfMyNumb
+  afterNullArray.forEach((afterNullArray) => {
+    if ((indexOfMyNumbForAfter +1) === afterNullArray) {
+      console.log(afterNullArray + " IS valid");
+      validNumbers.push(afterNullArray)
+
+      indexOfMyNumbForAfter ++
+    } else {
+      console.log(afterNullArray+ " is NOT valid")
+    }
+  });
+
+  console.log("time to test before array " + reversedBeforeNullArray)
+
+let indexOfMyNumbForBefore = indexOfMyNumb
+reversedBeforeNullArray.forEach((reversedBeforeNullArray) => {
+    if ((indexOfMyNumbForBefore - 1) === reversedBeforeNullArray) {
+      console.log(reversedBeforeNullArray + " IS valid");
+      validNumbers.push(reversedBeforeNullArray)
+
+      indexOfMyNumbForBefore --
+    } else {
+      console.log(reversedBeforeNullArray + " is NOT valid")
     }
   });
 
   console.log("Valid numbers:", validNumbers);
 
-  return index;
+  return validNumbers;
 }
 
-const originalArray = [null, 45, 7, null, null, "myNumb", null, null, null, null, null];
-const convertedArray = convertArray(originalArray);
+const originalArray = [null, 45, 7, null, 12, null, null, null, null, 2, null];
+const convertedArray = convertArray(originalArray, 12);
 
-console.log(convertedArray);
-
-
+console.log("this is the converted test array valid spaces " + convertedArray);
 
 
-function logRowsWithSameArrayPosition(board, row, column) {
-  let currentRow = board[row];
-  let currentColumn = column; 
-
-  let columnString = ""; // Empty string variable
-
-  // Iterate over the keys and concatenate column 3 values to the string
-  const columnArray = []; // Declare an empty array
-
-for (const key in gameBoard) {
-  const value = gameBoard[key][column];
-  columnArray.push(value); // Push the value to the array
-}
-const tds = document.querySelectorAll('td');
-tds.forEach(td => {
-  td.classList.remove('highlight');
-});
 
 
-  console.log(columnArray);
-  console.log(currentRow)
 
-
-  currentRow.forEach((item, index) => {
-    if (item === null) {
-      const currID = row + (index);
-      // console.log(currID);
-      const avail = document.querySelector(`#${currID}`);
-      // console.log(avail);
-      const isVisible = isNullSpaceVisible(currID); // Check if the null space is visible
-
-      if (isVisible) {
-        avail.classList.add('highlight');
-      }
-    }
-  });
-
-  columnArray.forEach((item, index) => {
-    if (item === null) {
-      const letter = String.fromCharCode(index + 97); // 97 is the ASCII value of 'a'
-      const currID = letter + column;
-      const avail = document.querySelector(`#${currID}`);
-      const isVisible = isNullSpaceVisible(currID); // Check if the null space is visible
-  
-      if (isVisible) {
-        avail.classList.add('highlight');
-      }
-    }
-  });
-
-
-  console.log(`This is the horizontal and vertical for the chosen piece:\n- Current Row:\n   ${currentRow}\n- Current Column:\n   ${columnArray}`);
-}
 
 
 

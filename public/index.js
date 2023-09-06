@@ -8,27 +8,28 @@ const moveSelection = { row: 'd', col: 7 };
 const container = document.getElementById('table');
 container.innerHTML = generateBoard();
 
-console.log(`this is the board \n${JSON.stringify(board)}`)
+// console.log(`this is the board \n${JSON.stringify(board)}`)
 
 
 // Example usage: get the HTML element for row 'a' and column 3
-logRowsWithSameArrayPosition(gameBoard, 'f', 5);
 
-const cellElement = getCellElement(playerSelection.row, playerSelection.col);
+// logRowsWithSameArrayPosition(gameBoard, 'f', 5);
 
-cellElement.classList.add('highlight');
+// const cellElement = getCellElement(playerSelection.row, playerSelection.col);
 
-const cellElementMove = getCellElement(moveSelection.row, moveSelection.col);
+// cellElement.classList.add('highlight');
 
-cellElementMove.classList.add('highlightMove');
+// const cellElementMove = getCellElement(moveSelection.row, moveSelection.col);
 
-movePiece(playerSelection.row, playerSelection.col, moveSelection.row, moveSelection.col)
+// cellElementMove.classList.add('highlightMove');
 
-console.log(`this is the board after the move\n${JSON.stringify(gameBoard)}`)  
+// movePiece(playerSelection.row, playerSelection.col, moveSelection.row, moveSelection.col)
+
+// console.log(`this is the board after the move\n${JSON.stringify(gameBoard)}`)  
   // End example usage
   
-togglePlayerTurn();
-console.log('Current player:', currentPlayer); // Player One
+// togglePlayerTurn();
+// console.log('Current player:', currentPlayer); // Player One
  
 // togglePlayerTurn();
 // console.log('Current player:', currentPlayer); // Player One
