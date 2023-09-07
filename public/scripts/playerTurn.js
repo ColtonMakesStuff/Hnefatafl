@@ -47,16 +47,15 @@ console.log("the selected piece id is " +parentId)
 const letter = parsedID.letter;
 const numberAsInt = parsedID.numberAsInt;
 console.log('Parent ID:', letter, numberAsInt);
-logRowsWithSameArrayPosition(gameBoard, `${letter}`, numberAsInt, pieceID)
+logRowsWithSameArrayPosition(gameBoard, `${letter}`, numberAsInt, pieceID, parentId)
     });
   });
 } 
 
-function logRowsWithSameArrayPosition(board, row, column, pieceID) {
+function logRowsWithSameArrayPosition(board, row, column, pieceID, parentId) {
   console.log("adding classes to available spaces")
   let currentRow = board[row];
   // let currentColumn = column; 
-
 
   // Iterate over the keys and concatenate column 3 values to the string
   const columnArray = []; // Declare an empty array
@@ -79,35 +78,78 @@ tds.forEach(td => {
   console.log("valid column " + convertedColumnArray)
   console.log("valid row " + convertedRowArray)
 
+console.log("im the parent id "+ parentId)
 
-  currentRow.forEach((item, index) => {
-    if (item === null) {
-      const currID = row + (index);
-      // console.log(currID);
-      const avail = document.querySelector(`#${currID}`);
-      // console.log(avail);
+let positions = [];
 
-      if (isVisible) {
-        avail.classList.add('highlight');
-      }
-    }
-  });
+let matches = parentId.match(/^([a-zA-Z]+)(\d+)$/);
 
-  columnArray.forEach((item, index) => {
-    if (item === null) {
-      const letter = String.fromCharCode(index + 97); // 97 is the ASCII value of 'a'
-      const currID = letter + column;
+if (matches) {
+  let letter = matches[1];
+  let number = matches[2];
+  
+  positions.push(letter); // Push the letter into the positions array
+  positions.push(number); // Push the number into the positions array
+}
+
+console.log(positions[0]); // Output: f
+console.log(positions[1]); // Output: 11
+
+// function numberToLetter(number) {
+//   const baseCharCode = 'a'.charCodeAt(0); // Base character code for 'a'
+//   const letter = String.fromCharCode(baseCharCode + number);
+//   return letter;
+// }
+ let i = 0;
+convertedColumnArray.forEach(() => {
+  console.log("test " + convertedColumnArray);
+  let letter = '';
+ 
+  if (convertedColumnArray[i] === 0) {
+    letter = 'a';
+  } else if (convertedColumnArray[i] === 1) {
+    letter = 'b';
+  } else if (convertedColumnArray[i] === 2) {
+    letter = 'c';
+  } else if (convertedColumnArray[i] === 3) {
+    letter = 'd';
+  } else if (convertedColumnArray[i] === 4) {
+    letter = 'e';
+  } else if (convertedColumnArray[i] === 5) {
+    letter = 'f';
+  } else if (convertedColumnArray[i] === 6) {
+    letter = 'g';
+  } else if (convertedColumnArray[i] === 7) {
+    letter = 'h';
+  } else if (convertedColumnArray[i] === 8) {
+    letter = 'i';
+  } else if (convertedColumnArray[i] === 9) {
+    letter = 'j';
+  } else if (convertedColumnArray[i] === 10) {
+    letter = 'k';
+  };
+i++;
+  console.log("test " + letter);
+
+  const currID = letter + positions[1];
+  console.log("test " + currID);
+  
+  const avail = document.querySelector(`#${currID}`);
+  avail.classList.add('highlight');
+  //I needd to add event listeners as well to make move peice available, it will need to take parent id as well as parse the selected positions ID
+});
+
+
+i=0
+  convertedRowArray.forEach(() => {
+    
+      const currID = positions[0] + convertedRowArray[i];
       // console.log("currID is " + currID)
       const avail = document.querySelector(`#${currID}`);
-  
-      if (isVisible) {
-        avail.classList.add('highlight');
-      }
-    }
+avail.classList.add('highlight');
+        //I needd to add event listeners as well to make move peice available, it will need to take parent id as well as parse the selected positions ID
+    i++
   });
-
-
-  console.log(`This is the horizontal and vertical for the chosen piece:\n- Current Row:\n   ${currentRow}\n- Current Column:\n   ${columnArray}`);
 }
 // console.log('Current player:', currentPlayer); // Player One
 

@@ -28,7 +28,7 @@ container.innerHTML = generateBoard();
 // console.log(`this is the board after the move\n${JSON.stringify(gameBoard)}`)  
   // End example usage
   
-// togglePlayerTurn();
+ togglePlayerTurn();
 // console.log('Current player:', currentPlayer); // Player One
  
 // togglePlayerTurn();
