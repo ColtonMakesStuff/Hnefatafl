@@ -1,6 +1,6 @@
 import { board, gameBoard, generateBoard } from './scripts/board.js';
-import {logRowsWithSameArrayPosition, togglePlayerTurn, currentPlayer, whosTurnIsItAnyway, parseID} from './scripts/playerTurn.js';
-import {movePiece, getCellElement} from './scripts/playerMove.js';
+import {logRowsWithSameArrayPosition, togglePlayerTurn, currentPlayer, whosTurnIsItAnyway} from './scripts/playerTurn.js';
+import {getCellElement} from './scripts/playerMove.js';
 
 const playerSelection = { row: 'd', col: 5 };
 const moveSelection = { row: 'd', col: 7 };

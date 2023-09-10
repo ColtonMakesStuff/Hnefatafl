@@ -1,106 +1,119 @@
 import {board, gameBoard} from './board.js';
 
- 
-let currentPlayer = 'Attacker';
 
+ // Set the initial player to 'Attacker'
+let currentPlayer = 'Attacker';
+// document global reference to current peices
+
+// Function to toggle the player turn between 'Attacker' and 'Defender'
 function togglePlayerTurn() {
   currentPlayer = currentPlayer === 'Attacker' ? 'Defender' : 'Attacker';
 }
-//if player is attacker than give event listener to the divs with the beserker class
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Function to determine whose turn it is
 const whosTurnIsItAnyway = (currentPlayer) => {
-  // console.log("whosTurnIsItAnyway function ran");
+    // If the current player is 'Attacker', handle initial click for 'beserker' pieces
   console.log(currentPlayer)
   if (currentPlayer === 'Attacker') {
     let pieceType = 'beserker';
     handleInitialClick(pieceType) 
+      // If the current player is 'Defender', handle initial click for 'guard' and 'jarl' pieces
   } else if (currentPlayer === 'Defender') {
     let pieceType = 'guard, .jarl';
     handleInitialClick(pieceType) 
   } 
 };
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//function for splitting the parent id into its parts
+const splitID = (id) => {
+  const letterOfId = id.charAt(0); // Get the first character (letter)
+  const numberString = id.slice(1); // Get the remaining characters as a string
+  const realNumberOfId = parseInt(numberString)
+  return { letterOfId, realNumberOfId };
+};
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// function for the click on the selected piece
 const handleInitialClick = (pieceType) => {
+    // Select all the divsOfPiece with the specified piece type
+const divsOfPiece = document.querySelectorAll(`.${pieceType}`);
+
+      console.log(`whosTurnIsItAnyway function ran for ${pieceType}`);
+      console.log("handling add listeners to peices")   
+divsOfPiece.forEach(div => {
   
-  const divs = document.querySelectorAll(`.${pieceType}`);
-  console.log(`whosTurnIsItAnyway function ran for ${pieceType}`);
-  console.log("handleing add listeners")
-  divs.forEach(div => {
-    div.addEventListener('click', function(event) {
-      console.log("handling initial click")
-      // Remove the 'highlight' class from all divs
-      divs.forEach(div => {
+      // Add a click event listener to each div
+      div.addEventListener('click', function() {
+      // Remove the 'highlight' class from all divsOfPiece
+        divsOfPiece.forEach(div => {
         div.classList.remove('highlight');
       });
-
       // Add the 'highlight' class to the clicked div
       div.classList.add('highlight');
 
-      console.log(`${pieceType} started turn`);
-       console.log("div id is hopefully " + div.id);
-      // Add your logic here
-      const pieceID = parseFloat(div.id);
-    // Get the ID of the parent element
-    const parentId = div.parentNode.id;
-console.log("the selected piece id is " +parentId)
-   const parsedID = parseID(parentId);
-const letter = parsedID.letter;
-const numberAsInt = parsedID.numberAsInt;
-console.log('Parent ID:', letter, numberAsInt);
-logRowsWithSameArrayPosition(gameBoard, `${letter}`, numberAsInt, pieceID, parentId)
+      const pieceId = parseFloat(div.id);
+      const parentId = div.parentNode.id;
+
+console.log("I AM PIECE pieceId:" + pieceId)
+console.log("I AM PARENT parentId:" + parentId)
+      // Parse the parent ID to extract the letter and number
+      const theSplitID = splitID(parentId);
+      const theLetterOfId = theSplitID.letterOfId;
+      const theNumberOfId = theSplitID.realNumberOfId;
+      // console.log('Parent ID:', letter, numberAsInt);
+console.log("I AM THE LETTER OF THE PARENT ID theLetterOfId: " +theLetterOfId)
+console.log("I AM THE NUMBER OF THE PARENT ID theNumberOfId: " +theNumberOfId)
+      // Call the logRowsWithSameArrayPosition function
+      logRowsWithSameArrayPosition(gameBoard, theLetterOfId, theNumberOfId, pieceId, parentId)
     });
   });
 } 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-function logRowsWithSameArrayPosition(board, row, column, pieceID, parentId) {
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// Function to log the rows with the same array position as the selected piece
+function logRowsWithSameArrayPosition(board, row, column, pieceId, parentId) {
   console.log("adding classes to available spaces")
+
+    // Get the current row from the game board
   let currentRow = board[row];
-  // let currentColumn = column; 
-
-  // Iterate over the keys and concatenate column 3 values to the string
   const columnArray = []; // Declare an empty array
-
-for (const key in gameBoard) {
-  const value = gameBoard[key][column];
-  columnArray.push(value); // Push the value to the array
-}
-const tds = document.querySelectorAll('td');
-tds.forEach(td => {
-  td.classList.remove('highlight');
-});
+    // Iterate over the keys of the game board and get the column values
+  for (const key in gameBoard) {
+      const value = gameBoard[key][column];
+      columnArray.push(value); // Push the value to the array
+  }
+  //clear highlights
+  const tds = document.querySelectorAll('td');
+    tds.forEach(td => {
+    td.classList.remove('highlight');
+  });
 
 
   console.log( "this is the column array "+ columnArray);
   console.log("this is the row array "+ currentRow)
-  const convertedColumnArray = convertArray(columnArray, pieceID);
-  const convertedRowArray = convertArray(currentRow, pieceID);
+
+    // Convert the column array and row array to valid column and row arrays
+  const convertedColumnArray = convertArray(columnArray, pieceId);
+  const convertedRowArray = convertArray(currentRow, pieceId);
 
   console.log("valid column " + convertedColumnArray)
   console.log("valid row " + convertedRowArray)
 
 console.log("im the parent id "+ parentId)
 
-let positions = [];
-
-let matches = parentId.match(/^([a-zA-Z]+)(\d+)$/);
-
-if (matches) {
-  let letter = matches[1];
-  let number = matches[2];
-  
-  positions.push(letter); // Push the letter into the positions array
-  positions.push(number); // Push the number into the positions array
-}
-
-console.log(positions[0]); // Output: f
-console.log(positions[1]); // Output: 11
-
-// function numberToLetter(number) {
-//   const baseCharCode = 'a'.charCodeAt(0); // Base character code for 'a'
-//   const letter = String.fromCharCode(baseCharCode + number);
-//   return letter;
-// }
  let i = 0;
+   // Add the 'highlight' class to the available spaces in the column
 convertedColumnArray.forEach(() => {
   console.log("test " + convertedColumnArray);
   let letter = '';
@@ -129,165 +142,117 @@ convertedColumnArray.forEach(() => {
     letter = 'k';
   };
 i++;
-  console.log("test " + letter);
 
-  const currID = letter + positions[1];
-  console.log("test " + currID);
-  
-  const avail = document.querySelector(`#${currID}`);
+  const columnArrayId = letter + column;
+  const avail = document.querySelector(`#${columnArrayId}`);
   avail.classList.add('highlight');
-  //I needd to add event listeners as well to make move peice available, it will need to take parent id as well as parse the selected positions ID
+  avail.addEventListener("click", handleClick);  
 });
 
 
 i=0
   convertedRowArray.forEach(() => {
-    
-      const currID = positions[0] + convertedRowArray[i];
+      const columnArrayId = row + convertedRowArray[i];
+      i++
       // console.log("currID is " + currID)
-      const avail = document.querySelector(`#${currID}`);
-avail.classList.add('highlight');
-        //I needd to add event listeners as well to make move peice available, it will need to take parent id as well as parse the selected positions ID
-    i++
+  const avail = document.querySelector(`#${columnArrayId}`);
+  avail.classList.add('highlight');
+  avail.addEventListener("click", handleClick);
+   
   });
 }
-// console.log('Current player:', currentPlayer); // Player One
-
- // player properties
-
-let attackerWin = false;
-let jarlsGuardWin = false;
-let jarlPiece = false;
-let playerPieces;
-
-const parseID = (input) => {
-
-  // Split the string into two parts: the letter and the number
-  let letter = input.match(/[a-zA-Z]+/)[0];
-  const number = input.match(/\d+/)[0];
-  let numberAsInt = parseInt(number, 10); 
-
-  console.log('Letter:', letter);
-  console.log('Number:', numberAsInt);
-
-  return { letter, numberAsInt };
-};
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-
-
-
-function getAvailablePieces() {
-  const availablePieces = [];
-  
-  for (const row in gameBoard) {
-    for (const value of gameBoard[row]) {
-      if (value !== null && value < 24) {
-        availablePieces.push(value);
-      }
-    }
-  }
-  console.log("Available pieces to be moved:", availablePieces);
-  return availablePieces;
-}
-
-getAvailablePieces();
-
-
-
-// function isSquareOccupied(square) {
-//   const row = square[0];
-//   const column = parseInt(square.substring(1));
-//   const value = gameBoard[row][column];
-  
-//   if (value !== null) {
-//     if (value < 24) {
-//       console.log("Square is occupied by a game piece less than 24.");
-//     } else if (value >= 24 && value <= 36) {
-//       console.log("Square is occupied by a game piece between 24 and 36.");
-//     } else {
-//       console.log("Square is occupied by a game piece, but not within the specified range.");
-//     }
-//   } else {
-//     console.log("Square is not occupied by a game piece.");
-//   }
-// }
-
-// Example usage
-// isSquareOccupied("a3"); // Square is not occupied by a game piece.
-// isSquareOccupied("a4"); // Square is occupied by a game piece less than 24.
-// isSquareOccupied("f6"); // Square is occupied by a game piece between 24 and 36.
-
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//converts arrays to valid spaces only
 function convertArray(array, chosenID) {
-  console.log(array +" is being tested")
-  console.log(chosenID +" is my piece")
-  
-  const indicesOfNull = [];
+  console.log(array +" is being tested"); // Log the array being tested
+  console.log(chosenID +" is my piece"); // Log the chosenID
+  const indicesOfNull = []; // Create an array to store the indices of null values
+  // Loop through the array to find indices of null values
   for (let i = 0; i < array.length; i++) {
     if (array[i] === null) {
-      indicesOfNull.push(i);
+      indicesOfNull.push(i); // Push the index of null value to indicesOfNull array
     }
   }
- console.log("i of null " + indicesOfNull)
-  let indexOfMyNumb = array.indexOf(chosenID);
-  console.log("my piece is at "+ indexOfMyNumb)
-
+  console.log("i of null " + indicesOfNull); // Log the indices of null values
+  let indexOfMyNumb = array.indexOf(chosenID); // Get the index of chosenID in the array
+  console.log("my piece is at "+ indexOfMyNumb); // Log the index of chosenID
+  // Filter the indicesOfNull array to get the indices before and after indexOfMyNumb
   const beforeNullArray = indicesOfNull.filter((index) => index < array.indexOf(chosenID));
   const afterNullArray = indicesOfNull.filter((index) => index > array.indexOf(chosenID));
+  const reversedBeforeNullArray = beforeNullArray.reverse(); // Reverse the beforeNullArray
+  let validNumbers = []; // Create an array to store valid numbers
+  let indexOfMyNumbForTest = indexOfMyNumb;// Iterate over the afterNullArray
 
-  const reversedBeforeNullArray = beforeNullArray.reverse();
-
-  console.log(reversedBeforeNullArray);
-  console.log(afterNullArray);
-
-  let validNumbers = [];
-
-let indexOfMyNumbForAfter = indexOfMyNumb
   afterNullArray.forEach((afterNullArray) => {
-    if ((indexOfMyNumbForAfter +1) === afterNullArray) {
-      console.log(afterNullArray + " IS valid");
-      validNumbers.push(afterNullArray)
-
-      indexOfMyNumbForAfter ++
+    if ((indexOfMyNumbForTest + 1) === afterNullArray) {
+      // console.log(afterNullArray + " IS valid"); // Log if the number is valid
+      validNumbers.push(afterNullArray); // Push the valid number to validNumbers array
+      indexOfMyNumbForTest++;
     } else {
-      console.log(afterNullArray+ " is NOT valid")
+      // console.log(afterNullArray + " is NOT valid"); // Log if the number is not valid
     }
   });
 
-  console.log("time to test before array " + reversedBeforeNullArray)
-
-let indexOfMyNumbForBefore = indexOfMyNumb
-reversedBeforeNullArray.forEach((reversedBeforeNullArray) => {
-    if ((indexOfMyNumbForBefore - 1) === reversedBeforeNullArray) {
-      console.log(reversedBeforeNullArray + " IS valid");
-      validNumbers.push(reversedBeforeNullArray)
-
-      indexOfMyNumbForBefore --
+ indexOfMyNumbForTest = indexOfMyNumb;
+  // Iterate over the reversedBeforeNullArray
+  reversedBeforeNullArray.forEach((reversedBeforeNullArray) => {
+    if ((indexOfMyNumbForTest - 1) === reversedBeforeNullArray) {
+      // console.log(reversedBeforeNullArray + " IS valid"); // Log if the number is valid
+      validNumbers.push(reversedBeforeNullArray); // Push the valid number to validNumbers array
+      indexOfMyNumbForTest--;
     } else {
-      console.log(reversedBeforeNullArray + " is NOT valid")
+      // console.log(reversedBeforeNullArray + " is NOT valid"); // Log if the number is not valid
     }
   });
 
-  console.log("Valid numbers:", validNumbers);
-
-  return validNumbers;
+  console.log("Valid numbers:", validNumbers); // Log the valid numbers
+  return validNumbers; // Return the valid numbers
 }
-
-const originalArray = [null, 45, 7, null, 12, null, null, null, null, 2, null];
-const convertedArray = convertArray(originalArray, 12);
-
-console.log("this is the converted test array valid spaces " + convertedArray);
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//adds functionallity to move click event listener
+const handleClick = (parentId, columnArrayId) => {
+  // Access variables within this function's scope
+  console.log("Event triggered!");
+  console.log("Parent ID: " + parentId);
+  console.log("Current ID: " + columnArrayId);
+  movePiece(parentId, columnArrayId);
+};
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+const movePiece = (parentId, currID) => {
+  const oldTdElement = document.getElementById(pOne + pTwo);
+  const newTdElement = document.getElementById(cOne + cTwo);
+  const oldDefault = newTdElement.innerHTML
+  console.log(newTdElement.innerHTML)
+  
+  newTdElement.innerHTML = oldTdElement.innerHTML;
+  oldTdElement.innerHTML = oldDefault;
+  
+  console.log ("selected = " + pOne +" "+ pTwo + "\n to Move to = " + cOne + " " +cTwo) 
+  
+  
+  
+      // Additional checks or game logic as needed
+      
+      // Update the game board with the new position
+       gameBoard[cOne][cTwo] = gameBoard[pOne][pTwo];
+       gameBoard[pOne][pTwo] = null;
+        console.log(gameBoard[cOne][cTwo])
+        console.log(gameBoard[pOne][pTwo])
+        togglePlayerTurn()
+        return
+  };
 
 
 
-
-
-
-
-
-  export { logRowsWithSameArrayPosition, togglePlayerTurn, currentPlayer, whosTurnIsItAnyway, parseID};
+  export { logRowsWithSameArrayPosition, togglePlayerTurn, currentPlayer, whosTurnIsItAnyway};
 
  

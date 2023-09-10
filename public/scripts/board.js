@@ -32,7 +32,7 @@ const generateBoard = () => {
   let html = '';
 
   for (const key in board) {
-    html += '<tr>';
+    html += '<tr id="table">';
     const currentArray = board[key];
 
     for (let i = 0; i < currentArray.length; i++) {
