@@ -83,7 +83,7 @@ console.log("I AM THE NUMBER OF THE PARENT ID theNumberOfId: " +theNumberOfId)
 
 // Function to log the rows with the same array position as the selected piece
 function logRowsWithSameArrayPosition(board, row, column, pieceId, parentId) {
-  console.log("adding classes to available spaces")
+  console.log("adding classes to available spaces" + " " + row + " " + column + " " + pieceId)
 
     // Get the current row from the game board
   let currentRow = board[row];
@@ -115,7 +115,6 @@ console.log("im the parent id "+ parentId)
  let i = 0;
    // Add the 'highlight' class to the available spaces in the column
 convertedColumnArray.forEach(() => {
-  console.log("test " + convertedColumnArray);
   let letter = '';
  
   if (convertedColumnArray[i] === 0) {
@@ -146,7 +145,12 @@ i++;
   const columnArrayId = letter + column;
   const avail = document.querySelector(`#${columnArrayId}`);
   avail.classList.add('highlight');
-  avail.addEventListener("click", handleClick);  
+  avail.addEventListener("click", function(event) {
+    const element = event.target;
+    const id = element.id;
+    console.log(id);
+    handleClick(row, column, pieceId, id)
+  });  
 });
 
 
@@ -157,8 +161,12 @@ i=0
       // console.log("currID is " + currID)
   const avail = document.querySelector(`#${columnArrayId}`);
   avail.classList.add('highlight');
-  avail.addEventListener("click", handleClick);
-   
+  avail.addEventListener("click", function(event) {
+    const element = event.target;
+    const id = element.id;
+    console.log(id);
+    handleClick(row, column, pieceId, id)
+  }); 
   });
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -216,40 +224,67 @@ function convertArray(array, chosenID) {
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //adds functionallity to move click event listener
-const handleClick = (parentId, columnArrayId) => {
+const handleClick = (row, column, pieceId, id) => {
   // Access variables within this function's scope
+  console
   console.log("Event triggered!");
-  console.log("Parent ID: " + parentId);
-  console.log("Current ID: " + columnArrayId);
-  movePiece(parentId, columnArrayId);
+  console.log("current row: " + row);
+  console.log("Current column: " + column);
+  console.log("piece ID: " + pieceId);
+  console.log("new pos ID: " + id);
+  movePiece(row, column, pieceId, id);
 };
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-const movePiece = (parentId, currID) => {
-  const oldTdElement = document.getElementById(pOne + pTwo);
-  const newTdElement = document.getElementById(cOne + cTwo);
+const movePiece = (row, column, pieceId, id) => {
+  const oldTdElement = document.getElementById(row + column);
+  const newTdElement = document.getElementById(id);
   const oldDefault = newTdElement.innerHTML
   console.log(newTdElement.innerHTML)
   
   newTdElement.innerHTML = oldTdElement.innerHTML;
   oldTdElement.innerHTML = oldDefault;
   
-  console.log ("selected = " + pOne +" "+ pTwo + "\n to Move to = " + cOne + " " +cTwo) 
+  console.log ("selected = " + row + column + "\n to Move " + pieceId + " to = " + id) 
   
-  
+  const result = splitID(id);
+  const letter = result.letterOfId;
+  const numb = result.realNumberOfId;
+  console.log(letter); // Access the letterOfId property
+  console.log(numb); // Access the realNumberOfId property
   
       // Additional checks or game logic as needed
       
       // Update the game board with the new position
-       gameBoard[cOne][cTwo] = gameBoard[pOne][pTwo];
-       gameBoard[pOne][pTwo] = null;
-        console.log(gameBoard[cOne][cTwo])
-        console.log(gameBoard[pOne][pTwo])
+       gameBoard[letter][numb] = gameBoard[row][column];
+       gameBoard[row][column] = null;
+           
+            const table = document.getElementById("table");
+            
+            const mypiece = table.querySelectorAll("div")
+            const tds = table.querySelectorAll("td.highlight");
+            console.log(mypiece)
+
+            mypiece.forEach((mypiece) => {
+              console.log(mypiece)
+              mypiece.classList.remove("highlight");
+              });
+
+            tds.forEach((tds) => {
+            console.log(tds)
+            tds.classList.remove("highlight");
+            });
+            
+            const clonedTable = table.cloneNode(true); // Clone the table and its descendants
+
+            table.parentNode.replaceChild(clonedTable, table);
+
         togglePlayerTurn()
-        return
-  };
+console.log(currentPlayer)
+whosTurnIsItAnyway(currentPlayer)
+      };
 
 
 
