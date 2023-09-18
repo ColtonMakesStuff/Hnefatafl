@@ -112,6 +112,14 @@ function logRowsWithSameArrayPosition(board, row, column, pieceId, parentId) {
 
 console.log("im the parent id "+ parentId)
 
+function handleMyClick(event) {
+  const element = event.target;
+  const id = element.id;
+  console.log(id);
+  handleClick(row, column, pieceId, id);
+}
+
+
  let i = 0;
    // Add the 'highlight' class to the available spaces in the column
 convertedColumnArray.forEach(() => {
@@ -145,12 +153,7 @@ i++;
   const columnArrayId = letter + column;
   const avail = document.querySelector(`#${columnArrayId}`);
   avail.classList.add('highlight');
-  avail.addEventListener("click", function(event) {
-    const element = event.target;
-    const id = element.id;
-    console.log(id);
-    handleClick(row, column, pieceId, id)
-  });  
+  avail.addEventListener("click", handleMyClick);
 });
 
 
@@ -161,14 +164,26 @@ i=0
       // console.log("currID is " + currID)
   const avail = document.querySelector(`#${columnArrayId}`);
   avail.classList.add('highlight');
-  avail.addEventListener("click", function(event) {
-    const element = event.target;
-    const id = element.id;
-    console.log(id);
-    handleClick(row, column, pieceId, id)
-  }); 
+  avail.addEventListener("click", handleMyClick);
   });
+
+  if (pieceId != 36){
+    const center = document.querySelector(`#f5`);
+    const a0 = document.querySelector(`#a0`);
+    const a10 = document.querySelector(`#a10`);
+    const k0 = document.querySelector(`#k0`);
+    const k10 = document.querySelector(`#k10`);
+    const removeExemptJarl = (square) => {square.classList.remove('highlight');
+    square.removeEventListener("click", handleMyClick);
+  }
+  removeExemptJarl(center)
+  removeExemptJarl(a0)
+  removeExemptJarl(a10)
+  removeExemptJarl(k0)
+  removeExemptJarl(k10)
 }
+}
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -179,7 +194,9 @@ function convertArray(array, chosenID) {
   console.log(chosenID +" is my piece"); // Log the chosenID
   const indicesOfNull = []; // Create an array to store the indices of null values
   // Loop through the array to find indices of null values
-  for (let i = 0; i < array.length; i++) {
+  
+for (let i = 0; i < array.length; i++) {
+  
     if (array[i] === null) {
       indicesOfNull.push(i); // Push the index of null value to indicesOfNull array
     }
@@ -237,6 +254,17 @@ const handleClick = (row, column, pieceId, id) => {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+const getAColumn = (arrayName, gameBoard, number) => {
+  
+       arrayName = []; // Declare an empty array
+  // Iterate over the keys of the game board and get the column values
+      for (const key in gameBoard) {
+          const value = gameBoard[key][number];
+          arrayName.push(value); // Push the value to the array
+      }
+return arrayName
+};
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const movePiece = (row, column, pieceId, id) => {
   const oldTdElement = document.getElementById(row + column);
@@ -265,29 +293,143 @@ const movePiece = (row, column, pieceId, id) => {
             
             const mypiece = table.querySelectorAll("div")
             const tds = table.querySelectorAll("td.highlight");
-            console.log(mypiece)
 
             mypiece.forEach((mypiece) => {
-              console.log(mypiece)
               mypiece.classList.remove("highlight");
               });
 
             tds.forEach((tds) => {
-            console.log(tds)
             tds.classList.remove("highlight");
             });
             
             const clonedTable = table.cloneNode(true); // Clone the table and its descendants
 
             table.parentNode.replaceChild(clonedTable, table);
-
+runOutcomeConditions(currentPlayer, gameBoard)
         togglePlayerTurn()
 console.log(currentPlayer)
+
 whosTurnIsItAnyway(currentPlayer)
+
       };
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ const  runOutcomeConditions = (currentPlayer, gameBoard) => {
+
+  const aArray = gameBoard.a;
+  // Replacing the first item with 100
+aArray.splice(0, 1, 100);
+
+// Replacing the last item with 100
+aArray.splice(aArray.length - 1, 1, 100);
+
+  const bArray = gameBoard.b;
+  const cArray = gameBoard.c;
+  const dArray = gameBoard.d;
+  const eArray = gameBoard.e;
+  const fArray = gameBoard.f;
+  const gArray = gameBoard.g;
+  const hArray = gameBoard.h;
+  const iArray = gameBoard.i;
+  const jArray = gameBoard.j;
+
+  const kArray = gameBoard.k;
+    // Replacing the first item with 100
+jArray.splice(0, 1, 100);
+
+// Replacing the last item with 100
+jArray.splice(jArray.length - 1, 1, 100);
 
 
+ console.log(aArray)
+const zero = getAColumn ("zeroArray", gameBoard, 0)
+  // Replacing the first item with 100
+  zero.splice(0, 1, 100);
 
+  // Replacing the last item with 100
+  zero.splice(zero.length - 1, 1, 100);
+  
+const one = getAColumn ("oneArray", gameBoard, 1)
+const two = getAColumn ("twoArray", gameBoard, 2)
+const three = getAColumn ("threeArray", gameBoard, 3)
+const four = getAColumn ("fourArray", gameBoard, 4)
+const five = getAColumn ("fiveArray", gameBoard, 5)
+const six = getAColumn ("sixArray", gameBoard, 6)
+const seven = getAColumn ("sevenArray", gameBoard, 7)
+const eight = getAColumn ("eightArray", gameBoard, 8)
+const nine = getAColumn ("nineArray", gameBoard, 9)
+
+const ten = getAColumn ("tenArray", gameBoard, 10)
+  // Replacing the first item with 100
+  ten.splice(0, 1, 100);
+
+  // Replacing the last item with 100
+  ten.splice(ten.length - 1, 1, 100);
+
+  console.log(ten)
+
+  const brokenBoard =[
+    aArray,
+    bArray,
+    cArray,
+    dArray,
+    eArray,
+    fArray,
+    gArray,
+    hArray,
+    iArray,
+    jArray,
+    kArray,
+
+    one,
+    two,
+    three,
+    four,
+    five,
+    six,
+    seven,
+    eight,
+    nine,
+    ten
+
+  ]
+  
+console.log(brokenBoard)
+checkEachRow(brokenBoard, currentPlayer)
+
+ }
+
+
+ const checkEachRow = (brokenBoard, currentPlayer) => {
+  console.log(currentPlayer)
+  for (const key in brokenBoard) {
+    const array = brokenBoard[key];
+
+   if (currentPlayer === "Defender") { 
+    for (let i = 0; i < array.length; i++) {
+      if (array[i] < 24 && array[i] != null && array[i] != 36 && array[i] != null && array[i - 1] > 23 && array[i + 1] > 23) {
+        // Perform desired operation when condition is met
+        console.log(`Value ${array[i]} at index ${i} meets the condition`);
+      }
+    }
+  }
+
+  if (currentPlayer === "Attacker") { 
+    for (let i = 0; i < array.length; i++) {
+      if (array[i] > 23 && array[i] != null && array[i] != 100 && array[i] != 36 && array[i - 1] < 24 && array[i + 1] < 24 && array[i + 1] != null && array[i - 1] != null) {
+        // Perform desired operation when condition is met
+        console.log(`Value ${array[i]} at index ${i} meets the condition`);
+      }
+    }
+  }
+
+
+}
+
+
+}
+
+
+ 
   export { logRowsWithSameArrayPosition, togglePlayerTurn, currentPlayer, whosTurnIsItAnyway};
 
  

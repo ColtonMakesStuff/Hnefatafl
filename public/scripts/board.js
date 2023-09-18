@@ -1,5 +1,5 @@
 const board = {
-  a: [100, null, null,    0,    1,    2,    3,    4, null, null,   100], 
+  a: [null, null, null,    0,    1,    2,    3,    4, null, null,   null], 
   b: [null, null, null, null, null,    5, null, null, null, null, null],
   c: [null, null, null, null, null, null, null, null, null, null, null],
   d: [   6, null, null, null, null,   24, null, null, null, null,    7],
@@ -9,11 +9,11 @@ const board = {
   h: [  16, null, null, null, null,   35, null, null, null, null,   17],
   i: [null, null, null, null, null, null, null, null, null, null, null],
   j: [null, null, null, null, null,   18, null, null, null, null, null],
-  k: [ 100, null, null,   19,   20,   21,   22,   23, null, null,  100]
+  k: [ null, null, null,   19,   20,   21,   22,   23, null, null,  null]
 };
 
 const gameBoard = {
-  a: [100, null, null,    0,    1,    2,    3,    4, null, null,   100],
+  a: [null, null, null,    0,    1,    2,    3,    4, null, null,   null],
   b: [null, null, null, null, null,    5, null, null, null, null, null],
   c: [null, null, null, null, null, null, null, null, null, null, null],
   d: [   6, null, null, null, null,   24, null, null, null, null,    7],
@@ -23,11 +23,11 @@ const gameBoard = {
   h: [  16, null, null, null, null,   35, null, null, null, null,   17],
   i: [null, null, null, null, null, null, null, null, null, null, null],
   j: [null, null, null, null, null,   18, null, null, null, null, null],
-  k: [ 100, null, null,   19,   20,   21,   22,   23, null, null,  100]
+  k: [ null, null, null,   19,   20,   21,   22,   23, null, null,  null]
 };
 
 // console.log(board)
-
+//  
 const generateBoard = () => {
   let html = '';
 
@@ -39,10 +39,9 @@ const generateBoard = () => {
       const value = currentArray[i];
       let className = '';
       const cellId = `${key}${i}`; // Define the ID for each <td> element
-
-      if (value === null) {
+      if (value === null && cellId != "a0" && cellId != "a10" && cellId != "k0" && cellId != "k10") {
         html += `<td id='${cellId}'></td>`; // Add the ID to the <td> element
-      } else if (value === 100) {
+      } else if (value === null && cellId == "a0" || cellId === "a10" || cellId === "k0" || cellId === "k10") {
         className = 'winSquare';
         html += `<td id='${cellId}' class='${className}'></td>`;
       } else if (value < 24) {
