@@ -1,5 +1,5 @@
 const board = {
-  a: [null, null, null,    0,    1,    2,    3,    4, null, null,   null], 
+  a: [null, null, null,    0,    1,    2,    3,    4, null, null, null], 
   b: [null, null, null, null, null,    5, null, null, null, null, null],
   c: [null, null, null, null, null, null, null, null, null, null, null],
   d: [   6, null, null, null, null,   24, null, null, null, null,    7],
@@ -9,11 +9,11 @@ const board = {
   h: [  16, null, null, null, null,   35, null, null, null, null,   17],
   i: [null, null, null, null, null, null, null, null, null, null, null],
   j: [null, null, null, null, null,   18, null, null, null, null, null],
-  k: [ null, null, null,   19,   20,   21,   22,   23, null, null,  null]
+  k: [ null, null, null,  19,   20,   21,   22,   23, null, null,  null]
 };
 
 const gameBoard = {
-  a: [null, null, null,    0,    1,    2,    3,    4, null, null,   null],
+  a: [null, null, null,    0,    1,    2,    3,    4, null, null, null],
   b: [null, null, null, null, null,    5, null, null, null, null, null],
   c: [null, null, null, null, null, null, null, null, null, null, null],
   d: [   6, null, null, null, null,   24, null, null, null, null,    7],
@@ -23,7 +23,7 @@ const gameBoard = {
   h: [  16, null, null, null, null,   35, null, null, null, null,   17],
   i: [null, null, null, null, null, null, null, null, null, null, null],
   j: [null, null, null, null, null,   18, null, null, null, null, null],
-  k: [ null, null, null,   19,   20,   21,   22,   23, null, null,  null]
+  k: [ null, null, null,  19,   20,   21,   22,   23, null, null,  null]
 };
 
 // console.log(board)

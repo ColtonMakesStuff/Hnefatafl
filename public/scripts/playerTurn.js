@@ -1,10 +1,12 @@
 import {board, gameBoard} from './board.js';
 
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  // Set the initial player to 'Attacker'
 let currentPlayer = 'Attacker';
-// document global reference to current peices
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Function to toggle the player turn between 'Attacker' and 'Defender'
 function togglePlayerTurn() {
   currentPlayer = currentPlayer === 'Attacker' ? 'Defender' : 'Attacker';
@@ -80,7 +82,6 @@ console.log("I AM THE NUMBER OF THE PARENT ID theNumberOfId: " +theNumberOfId)
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 // Function to log the rows with the same array position as the selected piece
 function logRowsWithSameArrayPosition(board, row, column, pieceId, parentId) {
   console.log("adding classes to available spaces" + " " + row + " " + column + " " + pieceId)
@@ -183,7 +184,6 @@ i=0
   removeExemptJarl(k10)
 }
 }
-
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -254,6 +254,7 @@ const handleClick = (row, column, pieceId, id) => {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const getAColumn = (arrayName, gameBoard, number) => {
   
        arrayName = []; // Declare an empty array
@@ -305,34 +306,40 @@ const movePiece = (row, column, pieceId, id) => {
             const clonedTable = table.cloneNode(true); // Clone the table and its descendants
 
             table.parentNode.replaceChild(clonedTable, table);
-runOutcomeConditions(currentPlayer, gameBoard)
+
+runOutcomeConditions(currentPlayer, gameBoard, pieceId)
+// runKingOutcomes(currentPlayer, gameBoard)
+
+//switch turns and move to next play
         togglePlayerTurn()
 console.log(currentPlayer)
 
 whosTurnIsItAnyway(currentPlayer)
-
-      };
+};
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- const  runOutcomeConditions = (currentPlayer, gameBoard) => {
 
-  const aArray = gameBoard.a;
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ const  runOutcomeConditions = (currentPlayer, gameBoard, pieceId) => {
+
+  const aArray = gameBoard.a.slice();
   // Replacing the first item with 100
 aArray.splice(0, 1, 100);
 
 // Replacing the last item with 100
 aArray.splice(aArray.length - 1, 1, 100);
 
-  const bArray = gameBoard.b;
-  const cArray = gameBoard.c;
-  const dArray = gameBoard.d;
-  const eArray = gameBoard.e;
-  const fArray = gameBoard.f;
-  const gArray = gameBoard.g;
-  const hArray = gameBoard.h;
-  const iArray = gameBoard.i;
-  const jArray = gameBoard.j;
+  const bArray = gameBoard.b.slice();
+  const cArray = gameBoard.c.slice();
+  const dArray = gameBoard.d.slice();
+  const eArray = gameBoard.e.slice();
+  const fArray = gameBoard.f.slice();
+  const gArray = gameBoard.g.slice();
+  const hArray = gameBoard.h.slice();
+  const iArray = gameBoard.i.slice();
+  const jArray = gameBoard.j.slice();
 
-  const kArray = gameBoard.k;
+  const kArray = gameBoard.k.slice();
     // Replacing the first item with 100
 jArray.splice(0, 1, 100);
 
@@ -341,6 +348,7 @@ jArray.splice(jArray.length - 1, 1, 100);
 
 
  console.log(aArray)
+ console.log(gameBoard.a)
 const zero = getAColumn ("zeroArray", gameBoard, 0)
   // Replacing the first item with 100
   zero.splice(0, 1, 100);
@@ -367,7 +375,7 @@ const ten = getAColumn ("tenArray", gameBoard, 10)
 
   console.log(ten)
 
-  const brokenBoard =[
+  const brokenRows =[
     aArray,
     bArray,
     cArray,
@@ -378,8 +386,10 @@ const ten = getAColumn ("tenArray", gameBoard, 10)
     hArray,
     iArray,
     jArray,
-    kArray,
-
+    kArray
+  ]
+    const brokenColumns =[
+    zero,
     one,
     two,
     three,
@@ -393,40 +403,157 @@ const ten = getAColumn ("tenArray", gameBoard, 10)
 
   ]
   
-console.log(brokenBoard)
-checkEachRow(brokenBoard, currentPlayer)
+  const rowConditioned = checkEachThing(brokenRows, currentPlayer, pieceId);
+  const columnConditioned = checkEachThing(brokenColumns, currentPlayer, pieceId);
+  
+  console.log(rowConditioned);
 
+columnConditioned.forEach((element) => {
+    console.log(element);
+let [numb, letter] = element.split(" ");
+    
+if (letter == 0) {
+  letter = 'a';
+} else if (letter == 1) {
+  letter = 'b';
+} else if (letter == 2) {
+  letter = 'c';
+} else if (letter == 3) {
+  letter = 'd';
+} else if (letter == 4) {
+  letter = 'e';
+} else if (letter == 5) {
+  letter = 'f';
+} else if (letter == 6) {
+  letter = 'g';
+} else if (letter == 7) {
+  letter = 'h';
+} else if (letter == 8) {
+  letter = 'i';
+} else if (letter == 9) {
+  letter = 'j';
+} else if (letter == 10) {
+  letter = 'k';
+};
+
+console.log(numb);
+console.log(letter);
+
+setToNull(gameBoard, letter, numb)
+
+});
+
+rowConditioned.forEach((element) => {
+    console.log(element);
+
+    let [letter, numb] = element.split(" ");
+
+if (letter == 0) {
+  letter = 'a';
+} else if (letter == 1) {
+  letter = 'b';
+} else if (letter == 2) {
+  letter = 'c';
+} else if (letter == 3) {
+  letter = 'd';
+} else if (letter == 4) {
+  letter = 'e';
+} else if (letter == 5) {
+  letter = 'f';
+} else if (letter == 6) {
+  letter = 'g';
+} else if (letter == 7) {
+  letter = 'h';
+} else if (letter == 8) {
+  letter = 'i';
+} else if (letter == 9) {
+  letter = 'j';
+} else if (letter == 10) {
+  letter = 'k';
+};
+console.log(letter);
+console.log(numb);
+setToNull(gameBoard, letter, numb)
+
+});
+    
  }
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
- const checkEachRow = (brokenBoard, currentPlayer) => {
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ const setToNull = (board, letter, numb) => {
+  board[letter][numb] = null;
+  const toBeSet = document.querySelector(`#${letter}${numb}`);
+  console.log(toBeSet)
+  toBeSet.removeChild(toBeSet.firstChild);
+};
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ const checkEachThing = (brokenRows, currentPlayer, pieceId) => {
+
+  const keyCondition = [];
+
   console.log(currentPlayer)
-  for (const key in brokenBoard) {
-    const array = brokenBoard[key];
+  for (const key in brokenRows) {
+    const array = brokenRows[key];
 
    if (currentPlayer === "Defender") { 
     for (let i = 0; i < array.length; i++) {
-      if (array[i] < 24 && array[i] != null && array[i] != 36 && array[i] != null && array[i - 1] > 23 && array[i + 1] > 23) {
-        // Perform desired operation when condition is met
-        console.log(`Value ${array[i]} at index ${i} meets the condition`);
+      if (
+        array[i] < 24 && 
+        array[i] != null && 
+        array[i] != 36 && 
+        array[i] != null && 
+        array[i - 1] > 23 && 
+        array[i + 1] > 23 &&
+        (
+          array[i - 1] == pieceId || 
+          array[i + 1] == pieceId ||
+          array[i + 1] == pieceId || 
+          array[i - 1] == pieceId 
+        )
+        ) {
+          keyCondition.push(`${key} ${i}`);
+        console.log(`Value ${array[i]} at index ${key} ${i} meets the condition`);
       }
     }
   }
 
   if (currentPlayer === "Attacker") { 
     for (let i = 0; i < array.length; i++) {
-      if (array[i] > 23 && array[i] != null && array[i] != 100 && array[i] != 36 && array[i - 1] < 24 && array[i + 1] < 24 && array[i + 1] != null && array[i - 1] != null) {
-        // Perform desired operation when condition is met
-        console.log(`Value ${array[i]} at index ${i} meets the condition`);
+      if (
+        array[i] > 23 && 
+        array[i] != null && 
+        array[i] != 100 && 
+        array[i] != 36 && 
+        array[i - 1] < 24 && 
+        array[i + 1] < 24 && 
+        array[i + 1] != null && 
+        array[i - 1] != null &&
+        (
+          array[i - 1] == pieceId || 
+          array[i + 1] == pieceId ||
+          array[i + 1] == pieceId || 
+          array[i - 1] == pieceId 
+        )
+        ) {
+          keyCondition.push(`${key} ${i}`);
+        console.log(`Value ${array[i]} at index ${key} ${i} meets the condition`);
       }
     }
   }
 
 
 }
+console.log(keyCondition)
 
-
+return keyCondition
 }
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 
  
