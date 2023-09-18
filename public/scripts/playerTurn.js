@@ -341,10 +341,10 @@ aArray.splice(aArray.length - 1, 1, 100);
 
   const kArray = gameBoard.k.slice();
     // Replacing the first item with 100
-jArray.splice(0, 1, 100);
+kArray.splice(0, 1, 100);
 
 // Replacing the last item with 100
-jArray.splice(jArray.length - 1, 1, 100);
+kArray.splice(jArray.length - 1, 1, 100);
 
 
  console.log(aArray)
@@ -373,7 +373,7 @@ const ten = getAColumn ("tenArray", gameBoard, 10)
   // Replacing the last item with 100
   ten.splice(ten.length - 1, 1, 100);
 
-  console.log(ten)
+  console.log(ten, zero, kArray, aArray)
 
   const brokenRows =[
     aArray,
@@ -507,8 +507,8 @@ setToNull(gameBoard, letter, numb)
         array[i] != null && 
         array[i] != 36 && 
         array[i] != null && 
-        array[i - 1] > 23 && 
-        array[i + 1] > 23 &&
+        (array[i - 1] > 23 || array[i - 1] == 100) && 
+        (array[i + 1] > 23 || array[i + 1] == 100) &&
         (
           array[i - 1] == pieceId || 
           array[i + 1] == pieceId ||
@@ -529,8 +529,8 @@ setToNull(gameBoard, letter, numb)
         array[i] != null && 
         array[i] != 100 && 
         array[i] != 36 && 
-        array[i - 1] < 24 && 
-        array[i + 1] < 24 && 
+        (array[i - 1] < 24 || array[i - 1] == 100) && 
+        (array[i + 1] < 24 || array[i + 1] == 100) && 
         array[i + 1] != null && 
         array[i - 1] != null &&
         (
