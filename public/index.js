@@ -1,6 +1,6 @@
 import { board, gameBoard, generateBoard } from './scripts/board.js';
 import {logRowsWithSameArrayPosition, togglePlayerTurn, currentPlayer, whosTurnIsItAnyway} from './scripts/playerTurn.js';
-import {getCellElement} from './scripts/playerMove.js';
+import {} from './scripts/playerMove.js';
 
 const playerSelection = { row: 'd', col: 5 };
 const moveSelection = { row: 'd', col: 7 };
@@ -28,7 +28,6 @@ container.innerHTML = generateBoard();
 // console.log(`this is the board after the move\n${JSON.stringify(gameBoard)}`)  
   // End example usage
   
- togglePlayerTurn();
 // console.log('Current player:', currentPlayer); // Player One
  
 // togglePlayerTurn();
